@@ -1,7 +1,7 @@
 import mime from "mime";
 
 const ORIGIN = "https://media.georgeblack.me";
-const REMOTE_STORAGE_URL = "https://storage.googleapis.com/georgeblack.me";
+const REMOTE_STORAGE_URL = "https://storage.googleapis.com/media.georgeblack.me";
 const CACHE_TTL = "7776000";
 
 addEventListener("fetch", (event) => {
