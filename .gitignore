@@ -1,2 +1,4 @@
 node_modules
+worker
+dist
 .DS_Store
