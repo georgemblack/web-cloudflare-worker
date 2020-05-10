@@ -1,0 +1,6 @@
+name = "web-media"
+type = "javascript"
+account_id = "bc4564dd499c0a9b8a7bb79c9bd5ea6d"
+workers_dev = false
+route = "media.georgeblack.me/*"
+zone_id = "4a21548be8c0b23b8101c86314f4e413"

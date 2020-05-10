@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "author": "George Black <contact@georgeblack.me>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "lint": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  }
+}

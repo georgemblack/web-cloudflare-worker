@@ -1,1 +1,1 @@
-# static-content-worker
+Cloudflare Worker for serving assets from GCS bucket.
