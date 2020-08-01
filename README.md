@@ -1,1 +1,1 @@
-Cloudflare Worker to serve assets from GCS.
+Cloudflare Worker for serving assets from GCS.
