@@ -72,7 +72,7 @@ async function handleEvent(event) {
       "Access-Control-Allow-Origin": "https://georgeblack.me",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Content-Type": metadata.contentType,
-      "Cache-Control": metadata.cacheControl,
+      "Cache-Control": metadata.mimeType,
     },
   });
   event.waitUntil(caches.default.put(event.request.url, response.clone()));
