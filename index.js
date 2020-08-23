@@ -56,7 +56,7 @@ async function handleEvent(event) {
   if (response) return response;
 
   // fetch from kv
-  const { value, meta } = await ASSETS.getWithMetadata(key, "arrayBuffer");
+  const { value, metadata } = await ASSETS.getWithMetadata(key, "arrayBuffer");
   if (!value) {
     return new Response(NOT_FOUND_RESPONSE_BODY, {
       status: 404,
@@ -71,8 +71,8 @@ async function handleEvent(event) {
     headers: {
       "Access-Control-Allow-Origin": "https://georgeblack.me",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Content-Type": meta.contentType,
-      "Cache-Control": meta.cacheControl,
+      "Content-Type": metadata.contentType,
+      "Cache-Control": metadata.cacheControl,
     },
   });
   event.waitUntil(caches.default.put(event.request.url, response.clone()));
