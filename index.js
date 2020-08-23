@@ -7,6 +7,7 @@ const METHOD_NOT_ALLOWED_BODY = `
   </body>
 </html>
 `;
+
 const NOT_FOUND_RESPONSE_BODY = `
 <!DOCTYPE html>
 <html lang="en">
@@ -16,17 +17,6 @@ const NOT_FOUND_RESPONSE_BODY = `
   </body>
 </html>
 `;
-const INTERNAL_ERROR_RESPONSE_BODY = `
-<!DOCTYPE html>
-<html lang="en">
-  <body style="font-family: system-ui;text-align:center;">
-    <h1>INTERNAL SERVER ERROR, OH SHIT!</h1>
-    <p><em>Sorry 'bout that</em><p>
-  </body>
-</html>
-`;
-
-const REMOTE_STORAGE_URL = "https://storage.googleapis.com";
 
 addEventListener("fetch", (event) => {
   try {
@@ -65,10 +55,9 @@ async function handleEvent(event) {
   response = await caches.default.match(event.request.url);
   if (response) return response;
 
-  // fetch asset from cloud storage
-  let storageResponse = await fetch(`${REMOTE_STORAGE_URL}/${key}`);
-
-  if (storageResponse.status == 404) {
+  // fetch from kv
+  const { value, meta } = await ASSETS.getWithMetadata(key, "arrayBuffer");
+  if (!value) {
     return new Response(NOT_FOUND_RESPONSE_BODY, {
       status: 404,
       headers: {
@@ -76,23 +65,14 @@ async function handleEvent(event) {
       },
     });
   }
-  if (storageResponse.status != 200) {
-    return new Response(INTERNAL_ERROR_RESPONSE_BODY, {
-      status: 500,
-      headers: {
-        "Content-Type": "text/html",
-      },
-    });
-  }
 
   // build and cache response
-  response = new Response(storageResponse.body, {
+  response = new Response(value, {
     headers: {
       "Access-Control-Allow-Origin": "https://georgeblack.me",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Content-Type":
-        storageResponse.headers.get("Content-Type") || "text/plain",
-      "Cache-Control": `public, max-age=${cacheMaxAge(key)}`,
+      "Content-Type": meta.contentType,
+      "Cache-Control": meta.cacheControl,
     },
   });
   event.waitUntil(caches.default.put(event.request.url, response.clone()));
@@ -111,12 +91,4 @@ function getKey(event) {
     pathname = pathname.concat("/index.html");
   }
   return `${url.hostname}${pathname}`;
-}
-
-function cacheMaxAge(key) {
-  const extension = key.split(".").pop();
-  if (/^(jpg|jpeg|png|webp|mov|ico|svg|webmanifest)$/.test(extension))
-    return "1296000"; // 15 days
-  if (/^(js|css)$/.test(extension)) return "172800"; // 2 days
-  return "7200"; // 2 hours
 }

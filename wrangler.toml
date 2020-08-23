@@ -5,5 +5,5 @@ workers_dev = false
 route = "*georgeblack.me/*"
 zone_id = "4a21548be8c0b23b8101c86314f4e413"
 kv_namespaces = [
-  { binding = "WEB_ASSETS", id = "8c4767b177aa4605b2137f38a55e834c", preview_id = "af45dc28c777474cb0e8bad2262371ac" }
+  { binding = "ASSETS", id = "8c4767b177aa4605b2137f38a55e834c", preview_id = "af45dc28c777474cb0e8bad2262371ac" }
 ]
