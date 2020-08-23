@@ -4,3 +4,6 @@ account_id = "bc4564dd499c0a9b8a7bb79c9bd5ea6d"
 workers_dev = false
 route = "*georgeblack.me/*"
 zone_id = "4a21548be8c0b23b8101c86314f4e413"
+kv_namespaces = [
+  { binding = "WEB_ASSETS", id = "8c4767b177aa4605b2137f38a55e834c" }
+]
