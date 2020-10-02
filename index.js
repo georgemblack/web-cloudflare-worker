@@ -13,7 +13,7 @@ const NOT_FOUND_RESPONSE_BODY = `
 <html lang="en">
   <body style="font-family: system-ui;text-align:center;">
     <h1>404 NOT FOUND!</h1>
-    <p><em>You better <a href="https://georgeblack.me" style="text-decoration: none;">head on home</a>, before you get into trouble.</em><p>
+    <p><em>You better <a href="https://george.black" style="text-decoration: none;">head on home</a>, before you get into trouble.</em><p>
   </body>
 </html>
 `;
@@ -36,7 +36,7 @@ async function handleEvent(event) {
   if (event.request.method == "OPTIONS") {
     return new Response(null, {
       headers: {
-        "Access-Control-Allow-Origin": "https://georgeblack.me",
+        "Access-Control-Allow-Origin": "https://george.black",
         "Access-Control-Allow-Methods": "GET, OPTIONS",
       },
     });
@@ -69,7 +69,7 @@ async function handleEvent(event) {
   // build and cache response
   response = new Response(value, {
     headers: {
-      "Access-Control-Allow-Origin": "https://georgeblack.me",
+      "Access-Control-Allow-Origin": "https://george.black",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Content-Type": metadata.mimeType,
       "Cache-Control": metadata.cacheControl,
