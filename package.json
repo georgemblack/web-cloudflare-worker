@@ -1,5 +1,6 @@
 {
   "private": true,
+  "name": "web",
   "author": "George Black <contact@george.black>",
   "license": "MIT",
   "main": "index.js",
