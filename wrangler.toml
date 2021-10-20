@@ -7,3 +7,4 @@ zone_id = "ebe9a5c16eef3126e396dfcf329abf0b"
 kv_namespaces = [
   { binding = "ASSETS", id = "8c4767b177aa4605b2137f38a55e834c", preview_id = "af45dc28c777474cb0e8bad2262371ac" }
 ]
+compatibility_date = "2021-10-18"
