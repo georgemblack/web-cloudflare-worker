@@ -1,6 +1,5 @@
 name = "web"
 account_id = "bc4564dd499c0a9b8a7bb79c9bd5ea6d"
-routes = ["george.black/*", "media.george.black/*"]
 main = "./index.js"
 kv_namespaces = [
   { binding = "ASSETS", id = "8c4767b177aa4605b2137f38a55e834c", preview_id = "af45dc28c777474cb0e8bad2262371ac" }
