@@ -3,7 +3,7 @@
   "name": "web",
   "author": "George Black <contact@george.black>",
   "license": "MIT",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
     "format": "prettier --write ."
   },
