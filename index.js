@@ -18,22 +18,20 @@ const NOT_FOUND_RESPONSE_BODY = `
 </html>
 `;
 
-addEventListener("fetch", (event) => {
-  try {
-    event.respondWith(handleEvent(event));
-  } catch (e) {
-    event.respondWith(new Response("Internal error", { status: 500 }));
+export default {
+  async fetch(request, env) {
+    return handleEvent(request, env);
   }
-});
+}
 
 /**
  * Primary event handler
  */
-async function handleEvent(event) {
+async function handleEvent(request, env) {
   let response;
-  const key = getKey(event);
+  const key = getKey(request);
 
-  if (event.request.method == "OPTIONS") {
+  if (request.method == "OPTIONS") {
     return new Response(null, {
       headers: {
         "Access-Control-Allow-Origin": "https://george.black",
@@ -42,7 +40,7 @@ async function handleEvent(event) {
     });
   }
 
-  if (event.request.method != "GET") {
+  if (request.method != "GET") {
     return new Response(METHOD_NOT_ALLOWED_BODY, {
       status: 405,
       headers: {
@@ -52,12 +50,17 @@ async function handleEvent(event) {
   }
 
   // check cache
-  response = await caches.default.match(event.request.url);
+  response = await caches.default.match(request.url);
   if (response) return response;
 
-  // fetch from kv
-  const { value, metadata } = await ASSETS.getWithMetadata(key, "arrayBuffer");
-  if (!value) {
+  // fetch from r2
+  let asset;
+  if(request.url.includes("/assets/")) {
+    asset = await env.WEB_ASSETS.get(key);
+  } else {
+    asset = await env.WEB.get(key);
+  }
+  if (!asset) {
     return new Response(NOT_FOUND_RESPONSE_BODY, {
       status: 404,
       headers: {
@@ -70,18 +73,16 @@ async function handleEvent(event) {
   response = new Response(value, {
     headers: {
       "Access-Control-Allow-Origin": "https://george.black",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Content-Type": metadata.mimeType,
-      "Cache-Control": metadata.cacheControl,
+      "Access-Control-Allow-Methods": "GET, OPTIONS"
     },
   });
-  event.waitUntil(caches.default.put(event.request.url, response.clone()));
+  env.waitUntil(caches.default.put(request.url, response.clone()));
 
   return response;
 }
 
-function getKey(event) {
-  let url = new URL(event.request.url);
+function getKey(request) {
+  let url = new URL(request.url);
   let pathname = url.pathname;
   if (pathname.endsWith("/")) {
     pathname = pathname.concat("index.html");
