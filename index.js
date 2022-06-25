@@ -74,7 +74,7 @@ async function handleEvent(request, env, context) {
     headers: {
       "Access-Control-Allow-Origin": "https://george.black",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Cache-Control": object.httpMetadata.cacheControl,
+      "Cache-Control": object.httpMetadata.cacheControl || "public, max-age=2592000",
       "Content-Type": object.httpMetadata.contentType
     },
   });
