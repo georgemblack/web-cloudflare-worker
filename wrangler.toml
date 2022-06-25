@@ -7,6 +7,7 @@ kv_namespaces = [
 compatibility_date = "2022-06-23"
 workers_dev = false
 
-[[r2_buckets]]
-binding = "WEB"
-bucket_name = "web"
+r2_buckets  = [
+  { binding = "WEB", bucket_name = "web", preview_bucket_name = "web-dev" },
+  { binding = "WEB_ASSETS", bucket_name = "web-assets", preview_bucket_name = "web-assets-dev" },
+]
