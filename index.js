@@ -54,12 +54,11 @@ async function handleEvent(request, env, context) {
   if (response) return response;
 
   // fetch from r2
-  console.log("R2!")
   let object;
   if(request.url.includes("assets/")) {
-    object = await env.WEB_ASSETS.get(key);
+    object = await env.WEB_ASSETS.get(key.replace("assets/", ""));
   } else {
-    object = await env.WEB.get(key.replace("assets/", ""));
+    object = await env.WEB.get(key);
   }
   if (!object) {
     return new Response(NOT_FOUND_RESPONSE_BODY, {
