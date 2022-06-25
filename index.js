@@ -73,7 +73,9 @@ async function handleEvent(request, env, context) {
   response = new Response(object.body, {
     headers: {
       "Access-Control-Allow-Origin": "https://george.black",
-      "Access-Control-Allow-Methods": "GET, OPTIONS"
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Cache-Control": object.httpMetadata.cacheControl,
+      "Content-Type": object.httpMetadata.contentType
     },
   });
   context.waitUntil(caches.default.put(request.url, response.clone()));
