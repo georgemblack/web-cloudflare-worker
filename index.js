@@ -19,15 +19,15 @@ const NOT_FOUND_RESPONSE_BODY = `
 `;
 
 export default {
-  async fetch(request, env) {
-    return handleEvent(request, env);
+  async fetch(request, env, context) {
+    return handleEvent(request, env, context);
   }
 }
 
 /**
  * Primary event handler
  */
-async function handleEvent(request, env) {
+async function handleEvent(request, env, context) {
   let response;
   const key = getKey(request);
 
@@ -54,13 +54,14 @@ async function handleEvent(request, env) {
   if (response) return response;
 
   // fetch from r2
-  let asset;
-  if(request.url.includes("/assets/")) {
-    asset = await env.WEB_ASSETS.get(key);
+  console.log("R2!")
+  let object;
+  if(request.url.includes("assets/")) {
+    object = await env.WEB_ASSETS.get(key);
   } else {
-    asset = await env.WEB.get(key);
+    object = await env.WEB.get(key.replace("assets/", ""));
   }
-  if (!asset) {
+  if (!object) {
     return new Response(NOT_FOUND_RESPONSE_BODY, {
       status: 404,
       headers: {
@@ -70,13 +71,13 @@ async function handleEvent(request, env) {
   }
 
   // build and cache response
-  response = new Response(value, {
+  response = new Response(object.body, {
     headers: {
       "Access-Control-Allow-Origin": "https://george.black",
       "Access-Control-Allow-Methods": "GET, OPTIONS"
     },
   });
-  env.waitUntil(caches.default.put(request.url, response.clone()));
+  context.waitUntil(caches.default.put(request.url, response.clone()));
 
   return response;
 }
@@ -91,5 +92,5 @@ function getKey(request) {
   if (!filename.includes(".")) {
     pathname = pathname.concat("/index.html");
   }
-  return `${url.hostname}${pathname}`;
+  return pathname.substring(1); // removes leading slash
 }
