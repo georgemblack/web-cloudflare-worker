@@ -21,8 +21,8 @@ const NOT_FOUND_RESPONSE_BODY = `
 export default {
   async fetch(request, env, context) {
     return handleEvent(request, env, context);
-  }
-}
+  },
+};
 
 /**
  * Primary event handler
@@ -55,7 +55,7 @@ async function handleEvent(request, env, context) {
 
   // fetch from r2
   let object;
-  if(request.url.includes("assets/")) {
+  if (request.url.includes("assets/")) {
     object = await env.WEB_ASSETS.get(key.replace("assets/", ""));
   } else {
     object = await env.WEB.get(key);
@@ -74,8 +74,9 @@ async function handleEvent(request, env, context) {
     headers: {
       "Access-Control-Allow-Origin": "https://george.black",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Cache-Control": object.httpMetadata.cacheControl || "public, max-age=2592000",
-      "Content-Type": object.httpMetadata.contentType
+      "Cache-Control":
+        object.httpMetadata.cacheControl || "public, max-age=2592000",
+      "Content-Type": object.httpMetadata.contentType,
     },
   });
   context.waitUntil(caches.default.put(request.url, response.clone()));
