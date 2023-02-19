@@ -54,12 +54,7 @@ async function handleEvent(request, env, context) {
   if (response) return response;
 
   // fetch from r2
-  let object;
-  if (request.url.includes("assets/")) {
-    object = await env.WEB_ASSETS.get(key.replace("assets/", ""));
-  } else {
-    object = await env.WEB.get(key);
-  }
+  const object = await env.WEB.get(key);
   if (!object) {
     return new Response(NOT_FOUND_RESPONSE_BODY, {
       status: 404,
