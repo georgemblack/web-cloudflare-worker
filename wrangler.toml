@@ -1,9 +1,16 @@
 name = "web"
+route = { pattern = "george.black", custom_domain = true }
 account_id = "bc4564dd499c0a9b8a7bb79c9bd5ea6d"
 main = "./index.js"
-compatibility_date = "2023-02-18"
+compatibility_date = "2023-02-19"
 workers_dev = false
-
 r2_buckets  = [
   { binding = "WEB", bucket_name = "web", preview_bucket_name = "web-staging" },
+]
+
+[env.staging]
+name = "web-staging"
+route = { pattern = "staging.george.black", custom_domain = true }
+r2_buckets = [
+  { binding = "WEB", bucket_name = "web-staging" }
 ]
