@@ -14,10 +14,9 @@ vars = { PUBLIC_HOSTNAME = "george.black", STORAGE_HOSTNAME = "storage.george.bl
 
 [env.staging]
 name = "web-staging"
-routes = [
-  { pattern = "storage.staging.george.black", custom_domain = true }
-]
+workers_dev = true
+routes = []
 r2_buckets = [
   { binding = "WEB", bucket_name = "web-staging" }
 ]
-vars = { PUBLIC_HOSTNAME = "staging.george.black", STORAGE_HOSTNAME = "storage.staging.george.black" }
+vars = { PUBLIC_HOSTNAME = "placeholder", STORAGE_HOSTNAME = "web-staging.georgeblack.workers.dev" }
