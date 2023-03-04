@@ -15,7 +15,6 @@ vars = { PUBLIC_HOSTNAME = "george.black", STORAGE_HOSTNAME = "storage.george.bl
 [env.staging]
 name = "web-staging"
 routes = [
-  { pattern = "staging.george.black", custom_domain = true },
   { pattern = "storage.staging.george.black", custom_domain = true }
 ]
 r2_buckets = [
