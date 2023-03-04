@@ -1,7 +1,7 @@
 name = "web"
 account_id = "bc4564dd499c0a9b8a7bb79c9bd5ea6d"
 main = "./index.js"
-compatibility_date = "2023-02-19"
+compatibility_date = "2023-03-02"
 workers_dev = false
 routes = [
   { pattern = "george.black", custom_domain = true },
