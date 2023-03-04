@@ -1,16 +1,24 @@
 name = "web"
-route = { pattern = "george.black", custom_domain = true }
 account_id = "bc4564dd499c0a9b8a7bb79c9bd5ea6d"
 main = "./index.js"
 compatibility_date = "2023-02-19"
 workers_dev = false
+routes = [
+  { pattern = "george.black", custom_domain = true },
+  { pattern = "storage.george.black", custom_domain = true }
+]
 r2_buckets  = [
   { binding = "WEB", bucket_name = "web", preview_bucket_name = "web-staging" },
 ]
+vars = { PUBLIC_HOSTNAME = "george.black", STORAGE_HOSTNAME = "storage.george.black" }
 
 [env.staging]
 name = "web-staging"
-route = { pattern = "staging.george.black", custom_domain = true }
+routes = [
+  { pattern = "staging.george.black", custom_domain = true },
+  { pattern = "storage.staging.george.black", custom_domain = true }
+]
 r2_buckets = [
   { binding = "WEB", bucket_name = "web-staging" }
 ]
+vars = { PUBLIC_HOSTNAME = "staging.george.black", STORAGE_HOSTNAME = "storage.staging.george.black" }
