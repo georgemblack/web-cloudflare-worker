@@ -8,6 +8,7 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "wrangler": "^3.29.0"
   }
 }

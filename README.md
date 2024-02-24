@@ -8,6 +8,6 @@ Cloudflare worker used for:
 Publishing via the Wrangler CLI:
 
 ```
-wrangler publish
-wrangler publish -e staging
+wrangler deploy
+wrangler deploy -e staging
 ```
